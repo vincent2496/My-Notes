@@ -1,0 +1,94 @@
+以Function為例
+
+//一個function只做一件事
+////////////////////////////////////////////////////////////////////////////
+//修正前
+void saveUser(const User& user) {
+  std::cout << user.name << std::endl;
+  saveToDatabase(user);
+}
+
+////////////////////////////////////////////////////////////////////////////
+//修正後
+//未來需求變動，例如只印出但不存檔，可以單獨調整對應函式，不影響其他部分。
+void printUser(const User& user) {
+  std::cout << user.name << std::endl;
+}
+
+void saveUser(const User& user) {
+  saveToDatabase(user);
+}
+
+void processUser(const User& user) {
+  printUser(user);
+	saveUser(user);
+}
+////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+以Class為例
+////////////////////////////////////////////////////////////////////////////
+//修改前
+//顯示需求改變，資料庫改變，驗證資料改變 -> 都要修改此class
+class UserManager {
+public:
+    void printUser(const User& user) {
+        std::cout << user.name << std::endl;
+    }
+
+    void saveUser(const User& user) {
+        saveToDatabase(user);
+    }
+
+    void validateUser(const User& user) {
+    }
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+//修改後
+//變更某個職責，如印出格式,儲存方式，只需修改對應類別
+class UserPrinter {
+public:
+    void print(const User& user) const {
+        std::cout << user.name << std::endl;
+    }
+};
+class UserRepository {
+public:
+    void save(const User& user) {
+        saveToDatabase(user);
+    }
+};
+class UserValidator {
+public:
+    bool isValid(const User& user) const {
+        return !user.name.empty();
+    }
+};
+class UserService {
+public:
+    UserService(UserValidator& validator, UserPrinter& printer, UserRepository& repository)
+        : validator(validator), printer(printer), repository(repository) {}
+
+    void process(const User& user) {
+        if (!validator.isValid(user)) {
+            return;
+        }
+        printer.print(user);
+        repository.save(user);
+    }
+
+private:
+    UserValidator& validator;
+    UserPrinter& printer;
+    UserRepository& repository;
+};
+////////////////////////////////////////////////////////////////////////////
+
+
+參考: Google開發指南
+https://google.github.io/styleguide/
