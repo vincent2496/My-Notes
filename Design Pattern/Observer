@@ -1,0 +1,142 @@
+使用時機:
+多個不同UI區域做畫面更新
+//////////////////////////////////////////////////////////////////////
+class IUIObserver{
+public:
+  virtual void update(int newData) = 0;
+	virtual ~IUIObserver() = default;
+};
+
+//Subject
+class DataModel{
+private:
+	std::vector<IUIObserver*> observers;
+  int data;
+
+public:
+	DataModel() : data(0){}
+	void attach(IUIObserver* obs){
+	  observers.push_back(obs);
+  }
+
+	void detach(IUIObserver* obs){
+	  while(true){
+      auto it = std::find(observers.begin(), observers.end(), obs);
+	    if(it == observers.end())
+	      break;
+      else
+	      observers.erase(it);
+    }
+  }
+
+  void notify(){
+	  for(auto& obs : observers){
+	    obs->update(data);
+    }
+  }
+
+  void setData(int newData){
+	  if(newData == data){//資料未變動，不更新
+      return;
+    }
+
+	   data = newData;
+	   notify();//狀態一旦改變，保證所有UI更新
+  }
+};
+
+class UIRegion1 : public IUIObserver{
+public:
+  void update(int newData) override{
+	  std::cout << newData << std::endl;
+  }
+};
+
+class UIRegion2 : public IUIObserver{
+public:
+  void update(int newData) override{
+	  std::cout << newData*2 << std::endl;
+  }
+};
+
+int main(){
+	DataModel model;
+  UIRegion1 ui1; 
+  UIRegion2 ui2;
+  model.attach(&ui1);
+  model.attach(&ui2);
+	model.setData(1);//ui1輸出1, ui2輸出2
+	model.detach(&ui2);
+  model.setData(10);//ui1輸出10
+
+  return 0;
+}
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+
+延遲通知，最後再統一做通知
+//////////////////////////////////////////////////////////////////////
+//擴充程式碼//
+void setData(int newData, bool isNotify){
+	if(newData == data){//資料未變動，不更新
+    return;
+  }
+
+	data = newData;
+	
+	if(isNotify){
+    notify();//狀態一旦改變，保證所有UI更新
+  }
+}
+
+
+//client
+model.setData(1, false);//設定但不通知
+model.setData(10, false);//設定但不通知
+model.notify();//最後統一通知
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+
+Batch, 批次更新
+//////////////////////////////////////////////////////////////////////
+//擴充程式碼//
+private:
+	int updateCnt = 0;
+public:
+  beginUpdate(){
+	  ++updateCnt;
+  }
+  endUpdate(){
+	  if(updateCnt > 0){
+      --updateCnt;
+      if(updateCnt == 0){
+			  notify();
+      }
+    }
+  }
+
+  void setData(int newData){
+	  if(newData == data){//資料未變動，不更新
+      return;
+    }
+    
+	  data = newData;
+	
+	  if(updateCnt == 0){//只有非批次更新，才通知
+      notify();
+    }	
+  }
+
+
+//client
+model.beginUpdate();//開啟批次通知
+model.setData(1);//設定但不通知
+model.setData(10);//設定但不通知
+model.endUpdate();//結束批次通知，並notify
+//////////////////////////////////////////////////////////////////////
