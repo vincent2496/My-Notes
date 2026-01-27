@@ -1,0 +1,41 @@
+善用定義
+/////////////////////////////////////////
+//修改前
+double getArea(int r){
+	return 3.14 * r * r;
+}
+
+
+
+//修改後
+//方便管理，未來將3.14修改為3.1415僅修改一處
+//便於使用，程式中的呼叫點，都可用PI來做運算
+#define PI 3.14
+double getArea(int r){
+	return PI * r * r;
+}
+/////////////////////////////////////////
+
+
+
+enum class
+/////////////////////////////////////////
+//修改後
+enum class State{
+	Initial = 0,
+	PASS = 1,
+	FAIL = 2
+}
+
+void process(State state){
+	if(state == State::Initial){
+		cout << "Initial" <<endl;
+	}
+  else if(state == State::Initial){
+		cout << "Pass" <<endl;
+	}
+  else if(state == State::Initial){
+		cout << "Fail" <<endl;
+	}
+}
+/////////////////////////////////////////
