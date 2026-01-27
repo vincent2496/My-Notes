@@ -1,0 +1,64 @@
+需求:
+設計一個架構生成系統常用的對話框，使用Singleton保持單一實體，並用快取+簡單工廠，管理生成機制
+////////////////////////////////////////////////////////////
+enum DialogType{
+	Default = -1,
+	DLG_A,
+	DLG_B
+}
+
+//打造相同風格外觀，以基礎類別來限定，供子類別繼承使用
+class DialogBase{
+	virtual ~DialogBase() = default;
+};
+
+class DialogA : public DialogBase{
+};
+
+class DialogB : public DialogBase{
+};
+
+//Singleton-UI控制器
+class UICtrl{
+  private://外部無法隨意new物件
+	  UICtrl(){}
+    //保證只產生一個 Instance
+    //UICtrl& a = UICtrl:getInstance();
+    //UICtrl b = a;
+	  UICtrl(const UICtrl&) = delete;//避免誤用，禁止呼叫
+    UICtrl& operator=(const UICtrl&) = delete;//避免誤用，禁止呼叫
+    //對話框的快取
+    std::unordered_map<DialogType, std::shared_ptr<DialogBase>> dlgCache;
+  public:
+	  static UICtrl& getInstance(){
+		  static UICtrl instance;//第一次呼叫初始化
+		  return instance;
+    }
+    std::shared_ptr<DialogBase> getDlg(DialogType type){
+      std::shared_ptr<DialogBase> dlg = nullptr;
+      if(dlgCache.find(type) != dlgCache.end()){
+  	    dlg = dlgCache[type];
+      }
+      else{//沒找到，要建立新的
+  	    if(type == DLG_A){
+  			  dlg = std::make_shared<DialogA>();
+        }
+        else if(type == DLG_B){
+  		    dlg = std::make_shared<DialogB>();
+        }
+      }
+
+	    if(dlg)
+		    dlgCache[type] = dlg;
+
+      return dlg;
+    }
+};
+
+
+//client
+
+//需求: 設計一個架構生成系統常用的對話框
+auto dlg = UICtrl::getInstance().getDlg(DialogType::DLG_A);
+//dlg->instruction(); 使用者做操作
+////////////////////////////////////////////////////////////
