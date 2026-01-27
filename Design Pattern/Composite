@@ -1,0 +1,64 @@
+需求:
+設計一個多層次架構。
+每一層會有自己的特殊數學運算，最終需取得每層的結果值。
+
+
+///////////////////////////
+class Shape{
+	virtual std::string get() const = 0;
+	virtual ~Shape() = default;
+};
+
+class Point : public Shape{
+public:
+	std::string get() const override{
+	return "Point";
+}
+};
+
+class Line : public Shape{
+public:
+std::string get() const override{
+	return "Line";
+}
+};
+
+class CompositeShape : public Shape{
+private:
+	std::vector<std::shared_ptr<Shape>> children;
+public:
+	void add(std::shared_ptr<Shape> s){
+	children.push_back(s);
+}
+	void remove(std::shared_ptr<Shape> s){
+	auto it = std::find(children.begin(), children.end(), s);
+	if(it != children.end()){
+	children.erase(it);
+}
+}
+	std::string get()const override{
+std::string str;
+		for(const auto& child : children){
+	str+=child->get();
+	str+=" ";
+}
+
+return str;
+}
+	
+};
+
+
+//client code
+auto p = std::make_shared<Point>();
+auto l = std::make_shared<Line>();
+auto com1 = std::make_shared<CompositeShape>();
+com1->add(p);
+com1->add(l);
+auto com2 = std::make_shared<CompositeShape>();
+com2->add(com1);
+std::string result = com2->get();
+
+
+///////////////////////////
+
