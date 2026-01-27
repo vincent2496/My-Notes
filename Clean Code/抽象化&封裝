@@ -1,0 +1,96 @@
+Abstraction
+//////////////////////////////////////////
+//抽象化前
+class User{
+public:
+int id;
+int age;
+};
+
+//client
+User user;
+//外部可以隨意修改
+user.id = -100;//不合理
+user.age = 1000;//不合理
+//////////////////////////////////////////
+
+
+
+
+//修正後
+//隱藏實作細節 -> hide data, expose behavior
+////////////////////////////////////////////////////////
+class User{
+public:
+	User(int id, int age) : id(id), age(age){
+		if(id <= 0){
+	    throw std::invalid_argument("invalid id");
+    }
+
+    if(age < 0 || age > 150){
+	    throw std::invalid_argument("invalid age");
+    }
+  }
+
+	bool isAdult() const{
+	  return this->age >= 18;
+  }
+private:
+  int id;
+  int age;
+};
+
+
+//client
+User user(1, 20);
+//user.id = -100; 無法做這件事
+if(user.isAdult()){
+	//dosomething
+}
+////////////////////////////////////////////////////////
+
+
+
+
+
+
+Encapsulation
+////////////////////////////////////////////////////////
+//封裝前
+class User{
+public:
+	int getId() const(){
+	  return id;
+  }
+	void setId(int newId){
+	  id = newId;
+  }
+private:
+  int id;
+};
+
+//client
+User user;
+user.setId(-100);//不合理，getter/setter完全沒幫助
+////////////////////////////////////////////////////////
+
+
+
+//封裝後
+////////////////////////////////////////////////////////
+class User{
+public:
+	int getId() const{
+	return id;
+}
+	void setId(int newId){
+		if(newId <= 0){
+	    throw std::invalid_argument("invalid id");
+    }
+
+	  id = newId;
+}
+private:
+  int id;
+};
+////////////////////////////////////////////////////////
