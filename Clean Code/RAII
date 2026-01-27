@@ -1,0 +1,28 @@
+Resource Acquisition Is Initialization
+利用物件生命週期自動管理資源，避免 memory leak, resource leak
+
+//包裝一個類別自動管理外部資源
+///////////////////////////////////////////////
+class LifeCycle{
+public:
+	LifeCycle(){
+    //為了使用外部裝置API,進行資源初始化
+		initialExternalAPI();
+  }
+	~LifeCycle(){
+    //不需要了,做釋放
+		releaseExternalAPI();
+  }
+}
+
+
+//client
+//主要流程
+void process(){
+	LifeCycle lc;
+  //做各項的指令
+  ...
+  ...
+  ...
+}->離開此socpe自動釋放資源
+///////////////////////////////////////////////
