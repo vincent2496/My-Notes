@@ -1,0 +1,65 @@
+Terminals and Desktops 
+使用 Linux 的兩種主要方式
+桌面環境,Desktop Environment, GUI
+文字介面,Terminal / Shell / Console
+多數人會混著用，依任務不同切換
+
+桌面環境,Desktop Environment
+類似 Windows / macOS
+有視窗,圖示,選單,滑鼠操作
+適合:上網,看影片,修圖,寫文件,音樂創作
+
+Linux 的特色是
+桌面環境可自由更換,客製化
+多數發行版會幫你選好預設的
+
+常見桌面環境
+GNOME
+KDE Plasma
+Xfce
+LXQt
+Cinnamon
+MATE
+
+Shell / Terminal / Console 的差別
+Shell
+接收你打的指令,執行,回傳結果
+常見:Bash
+其他:Zsh、fish、csh、ksh
+
+Terminal
+顯示 shell 的視窗程式
+通常跑在圖形介面裡
+
+Console
+沒有圖形介面
+純文字模式下的 shell
+
+
+Shell = 打指令的程式
+Terminal = 裝 shell 的視窗
+
+為什麼 Terminal 很重要
+遠端管理 Linux(伺服器,Raspberry Pi,雲端主機)
+多半透過 SSH,Secure Shell
+
+不用在本機安裝 Linux:
+Windows / macOS
+
+用 terminal emulator 連遠端 Linux
+
+
+需不需要學指令
+看你想用 Linux 做什麼:
+桌面日常使用                ->幾乎不用
+遠端主機 / Server          ->必備
+Embedded / Pi / Cloud  ->必備
+系統管理 / Dev              ->必備
+
+熟悉 Bash 對任何 Linux 使用者都是加分
+
+
+Desktop vs Terminal：不是二選一
+多數人是 混用
+GUI:直覺,方便
+Terminal:快速,精準,可自動化
