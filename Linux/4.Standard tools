@@ -1,0 +1,53 @@
+Standard tools 
+單只有 Linux kernel 幾乎沒用
+真正讓人能用電腦做事的是
+Kernel + 一組標準工具utilities
+
+Linux 發行版都會附標準工具
+每個 Linux distro 會預裝一組工具
+讓使用者操作系統,程式與系統互動,安裝管理其他軟體
+
+GNU coreutils 是最核心的一組,GNU Core Utilities
+包含最基本,最常用的指令
+
+主要用在
+Terminal / Shell,Shell script,系統自動化
+
+常見指令
+cp:複製檔案
+mv:移動 / 重新命名
+cat:顯示檔案內容
+df / du:磁碟使用量
+chmod / chown:權限與擁有者
+
+coreutils 是開箱即用
+大部分 Linux distro:
+已經幫你裝好,不用自己安裝
+就算是最小安裝,也會有一套最低限度的工具
+
+不是每個指令你都要記
+有些指令很少用,歷史相容用,特定場景才會用
+重點是熟悉常用的那一小撮
+
+BusyBox,嵌入式世界的核心工具
+BusyBox != coreutils
+
+常見於:
+Embedded system,Router,小型裝置
+特點:
+一個程式，實作很多指令,節省空間資源
+
+指令名稱與行為:
+大多和coreutils 一樣,少部分功能簡化
+
+為什麼這件事很重要？
+因為它帶來一致性
+cp 在 Ubuntu / Debian / Alpine / Embedded 上都能用
+
+可移植性
+會用一套指令，幾乎能用遍 Linux 世界,降低學習成本,換 distro 不用重學全部指令
+
+單純GUI 使用者不會接觸到
+如果只用桌面,不碰 terminal
+那 coreutils 幾乎都在背景默默幫你做事
+
