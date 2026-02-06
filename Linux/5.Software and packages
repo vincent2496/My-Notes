@@ -1,0 +1,76 @@
+Linux 不只跑 core tools，還要裝各種軟體
+除了 coreutils
+實際使用一定會需要：
+生產力工具
+開發工具
+遊戲
+各種應用程式
+
+最常見的方式:發行版的軟體Repositories
+
+每個 Linux 發行版都有自己的Repositories
+由 distro 維護者負責
+
+特點:
+安全,穩定,版本相容性好
+
+安裝方式:
+指令列, 例如 apt,dnf
+
+圖形介面Software Center
+
+套件管理系統會:
+自動下載
+解決相依性（dependencies）
+安裝所需的其他套件
+
+更新與安全修補也是靠Repositories
+安全更新通常來自 repositories
+
+多數系統:
+會自動檢查
+可自動安裝更新
+
+
+軟體是套件Package形式
+不同 distro 使用不同套件格式
+套件管理工具是 distro 的重要差異之一
+
+但核心行為都很類似:
+放執行檔到固定位置
+放 library 到對的位置
+安裝文件man pages
+
+從原始碼Source code編譯軟體
+Linux 軟體多半來自開源原始碼
+可以下載 source code
+用編譯器gcc / clang
+產生可執行檔
+
+在開源世界很重要
+大型專案會用makefile,build system來描述怎麼編、怎麼裝
+
+
+平台無關的套件格式Sandbox
+常見Snap,Flatpak,AppImage
+
+特點:
+軟體包成自帶環境
+不直接塞進系統目錄
+跨發行版使用
+
+優點:
+安裝方便
+不怕系統相依性地獄
+
+缺點:
+可能比較慢
+與系統整合度較低
+檔案系統互通性有限
+
+
+現實世界通常是混用
+很常會出現
+A 軟體：用 apt 裝
+B 軟體：用 Snap
+C 軟體：自己編譯
