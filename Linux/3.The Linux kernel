@@ -1,0 +1,68 @@
+Linux 本質上是Kernel
+嚴格來說，Linux 指的是作業系統的核心,而不是完整的 OS
+所謂的 Linux 作業系統，通常是:
+->Linux kernel + 一堆工具與軟體 = Linux 發行版(distribution)
+
+Linux kernel 的由來與特色
+1991 年 Linus Torvalds 發布
+為了對抗當時限制很多的商業作業系統授權
+完全開源Open Source,任何人都能下載、修改、散佈
+->這也是為什麼會有這麼多 Linux 發行版
+
+Kernel 在作業系統中的角色
+Kernel 的工作就是負責軟體&硬體之間的溝通
+管理 CPU,記憶體,磁碟,網路卡等硬體
+提供 system calls 給使用者空間(user space)的程式使用
+
+沒有 kernel -> 程式無法使用硬體
+沒有程式 -> kernel 也派不上用場
+
+作業系統的三個層級
+Kernel —(system calls)—>使用者程式 / User Space
+Kernel ——>Hardware 
+
+
+範例:存檔Save
+在文字編輯器按下 Save
+使用者程式 ->呼叫 user space library
+library ->呼叫 kernel
+kernel  -> 寫入硬碟  ->回報成功
+
+Linux kernel 幾乎無所不在
+同一個核心概念，可跑在:
+超小型裝置,電路板,Raspberry Pi
+桌機 / 筆電
+行動裝置
+汽車
+超級電腦
+
+差別在於客製化 kernel
+移除不需要的硬體支援
+加入特定處理器或裝置支援
+
+多數人不用碰 kernel
+一般使用者：
+kernel 在背景默默工作
+你不需要懂 kernel 也能好好用 Linux
+
+會直接碰 kernel 的人
+硬體工程師
+核心開發者
+部分系統管理員
+
+
+Linux kernel 是可以自己改的
+原始碼在 kernel.org
+可以下載,修改,自己編譯
+->跑自己改過的 kernel, 這在主流作業系統裡非常罕見
+
+開機Boot時發生什麼事
+系統開機
+Kernel 被載入
+初始化系統(init system / system manager)啟動
+
+啟動服務:
+網路
+儲存
+桌面環境
+
