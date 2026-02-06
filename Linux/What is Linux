@@ -1,0 +1,11 @@
+什麼是 Linux?
+Linux 指的是以 Linux 核心(kernel)為基礎構建的作業系統
+沒有單一的 Linux 作業系統，通常是稱為 Linux 發行版(distributions)
+Linux 發行版包含 Linux 核心和一套標準工具
+
+Linux 的核心理念
+Linux 基於 Free and Open-Source Software，使用者可以查看,修改原始碼以符合需求
+
+Linux->Raspberry Pi
+Linux systems share the same basic components
+a kernel, a user space, files and resources, core tools, security boundaries
